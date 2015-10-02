@@ -1,9 +1,33 @@
 @charset "UTF-8";
 
+/* =========================================================================== */
+/* Fonts                                                                       */
+/* =========================================================================== */
+
+@font-face {
+  font-family: phei;
+  src: local('SimHei');
+}
+
+@font-face {
+  font-family: psong;
+  src: local('SimSun');
+}
+
+@font-face {
+  font-family: pmono;
+  src: local('Ubuntu Mono');
+}
+
+/* =========================================================================== */
+/* General Page                                                                */
+/* =========================================================================== */
+
 @page { /* defining overall trim size and page layout */
   size: 7in 9.1875in; /* width, height */
   margin-top: 0.75in; /* white space around the page */
   margin-bottom: 0.75in;
+
   @sidenote {
     float: outside;
     width: 1.1in;
@@ -11,42 +35,18 @@
   }
 }
 
-head title { display: none; }
-
-/*cover*/
-figure[data-type="cover"] {
-  page: cover;
-}
-
-figure[data-type="cover"] img {
-  max-width: 100%;
-  position: fixed;
-  left: 0;
-  top: 0;
-}
-
-body[data-type="book"] > figure[data-type="cover"] + section {
-    counter-reset: page 1;
-    page-break-before: right;
-}
-
-@page cover {
-  margin: 0;
-  padding: 0;
-}
-
-@page :left {
+@page:left {
   margin-left: 1.625in;
   margin-right: 1in;
   @bottom-left-corner {
-    font-family: SourceSansPro, sans-serif, ArialUnicodeMS;
+    font-family: Helvetica, phei, sans-serif;
     font-size: 9pt;
     text-align: left;
     margin-left: 0.375in;
     margin-top: 5pt;
   }
   @top-left {
-    font-family: SourceSansPro, sans-serif, ArialUnicodeMS;
+    font-family: Helvetica, phei, sans-serif;
     font-size: 8pt;
     text-align: left;
     margin-left: -0.65in;
@@ -55,18 +55,18 @@ body[data-type="book"] > figure[data-type="cover"] + section {
   @sidenote { margin-left: -1.25in; }
 }
 
-@page :right {
+@page:right {
   margin-right: 1.625in;
   margin-left: 1in;
   @bottom-right-corner {
-    font-family: SourceSansPro, sans-serif, ArialUnicodeMS;
+    font-family: Helvetica, phei, sans-serif;
     font-size: 9pt;
     text-align: right;
     margin-top: 5pt;
     margin-right: 0.375in;
   }
   @top-right {
-    font-family: SourceSansPro, sans-serif, ArialUnicodeMS;
+    font-family: Helvetica, phei, sans-serif;
     font-size: 8pt;
     text-align: right;
     margin-right: -0.65in;
@@ -75,11 +75,126 @@ body[data-type="book"] > figure[data-type="cover"] + section {
   @sidenote { margin-right: -1.25in; }
 }
 
-@page :blank { /* defining a truly blank master page */
+@page:blank { /* defining a truly blank master page */
   @bottom-left-corner { content: none; }
   @bottom-right-corner { content: none; }
   @top-right { content: none; }
   @top-left { content: none; }
+}
+
+head title { display: none; }
+
+/* =========================================================================== */
+/*  Cover page                                                                 */
+/* =========================================================================== */
+
+@page cover {
+  margin: 0;
+  padding: 0;
+}
+
+div[data-type="cover"] {
+  page: cover;
+  prince-bookmark-label: '封面'; /* cover page has no title, so set bookmark manually */
+  prince-bookmark-level: 1;
+}
+
+div[data-type="cover"] img {
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+
+body[data-type="book"] > div[data-type="cover"] + section {
+    counter-reset: page 1;
+    page-break-before: right;
+}
+
+/* =========================================================================== */
+/* Halftitlepage, titlepage                                                    */
+/* =========================================================================== */
+
+section[data-type="halftitlepage"],
+section[data-type="titlepage"] {
+  page: blank;
+  text-align: right;
+  page-break-before: right; /* titlepages always start on a right-hand page */
+  page-break-after: always;
+}
+
+section[data-type="halftitlepage"] h1,
+section[data-type="titlepage"] h1 {
+  font-family: Helvetica, phei, sans-serif;
+  border-bottom: 0.5pt solid cmyk(0%,0%,0%,100%);
+  margin-top: 126pt;
+  padding-bottom: 7pt;
+  text-align: left;
+}
+
+section[data-type="halftitlepage"] h2,
+section[data-type="titlepage"] h2,
+section[data-type="titlepage"] p.subtitle {
+  font-family: Helvetica, phei, sans-serif;
+  font-size: 13pt;
+  text-align: left;
+}
+
+section[data-type="halftitlepage"] h1 {
+  font-size: 16pt;
+  line-height: 18pt;
+}
+
+section[data-type="titlepage"] h1 {
+  font-size: 20pt;
+  line-height: 24pt;
+  font-weight: normal;
+}
+
+
+section[data-type="titlepage"] p[data-type="author"] {
+  font-size: 11pt;
+  margin-top: 66pt;
+}
+
+/* =========================================================================== */
+/* Copyright Page                                                              */
+/* =========================================================================== */
+
+section[data-type="copyright-page"] {
+  page: blank;
+  page-break-after: always;
+}
+
+section[data-type="copyright-page"] h1 {
+  font-family: Helvetica, phei, sans-serif;
+  font-weight: bold;
+  font-size: 8pt;
+  margin: 0;
+}
+
+section[data-type="copyright-page"] p.author {
+  font-size: 8pt;
+}
+
+section[data-type="copyright-page"] p {
+}
+
+section[data-type="copyright-page"] p.isbn {
+}
+
+/* =========================================================================== */
+/* Dedication Page                                                             */
+/* =========================================================================== */
+
+section[data-type="dedication"] {
+  font-family: Times, psong, serif;
+  page: blank;
+  page-break-after: always;
+  text-align: center;
+  padding-top: 96pt;
 }
 
 /* -------------------------------------------------------------- */
@@ -102,123 +217,11 @@ h1 + p, h2 + p, h3 + P {
 }
 
 p, dd { /* general text styles */
-  font-family: 'SourceSansPro', sans-serif, 'ArialUnicodeMS';
-  text-indent: 0.167in;
+  font-family: Times, psong, serif;
   font-size: 9.5pt;
   line-height: 13pt;
   margin: 0;
   text-align: justify;
-}
-
-/* -------------------------------------------------------------- */
-/* ------------------------- Global Styles ---------------------- */
-/* -------------------------------------------------------------- */
-body {
-  -ah-kerning-mode: pair;
-  -ah-hyphenate-hyphenated-word: false;
-  hyphens: auto;
-}
-
-/* general inlines */
-
-a {
-  color: cmyk(0%,0%,0%,80%);
-  font-weight: bold;
-  text-decoration: none;
-}
-
-/* counters add auto-numbering to elements in the book.
-   This reset initiates the counters, enabling them
-   to begin numbering correctly. */
-
-body[data-type="book"] {
-  counter-reset: page 1 PartNumber ChapterNumber AppendixNumber FigureNumber TableNumber ExampleNumber EquationNumber footnote;
-}
-
-
-/* -------------------------------------------------------------- */
-/* -------------------------- Titlepage ------------------------- */
-/* -------------------------------------------------------------- */
-section[data-type="halftitlepage"],
-section[data-type="titlepage"] {
-  page: blank;
-  text-align: right;
-  page-break-before: right; /* titlepages always start on a right-hand page */
-  page-break-after: always;
-}
-
-section[data-type="halftitlepage"] h1,
-section[data-type="titlepage"] h1 {
-  font-family: Merriweather, serif, ArialUnicodeMS;
-  border-bottom: 0.5pt solid cmyk(0%,0%,0%,100%);
-  margin-top: 126pt;
-  padding-bottom: 7pt;
-  text-align: left;
-}
-
-section[data-type="halftitlepage"] h2,
-section[data-type="titlepage"] h2,
-section[data-type="titlepage"] p.subtitle {
-  font-family: SourceSansPro-Semibold, ArialUnicodeMS;
-  font-size: 13pt;
-  text-align: left;
-}
-
-section[data-type="halftitlepage"] h1 {
-  font-size: 16pt;
-  line-height: 18pt;
-}
-
-section[data-type="titlepage"] h1 {
-  font-size: 20pt;
-  line-height: 24pt;
-  font-weight: normal;
-}
-
-
-section[data-type="titlepage"] p[data-type="author"] {
-  font-family: Merriweather, serif, ArialUnicodeMS;
-  font-size: 11pt;
-  margin-top: 66pt;
-}
-
-
-/* -------------------------------------------------------------- */
-/* ------------------------ Copyright Page -----------------------*/
-/* -------------------------------------------------------------- */
-section[data-type="copyright-page"] {
-  page: blank;
-  page-break-after: always;
-}
-
-section[data-type="copyright-page"] h1 {
-  font-family: 'SourceSansPro', sans-serif, ArialUnicodeMS;
-  font-weight: bold;
-  font-size: 8pt;
-  margin: 0;
-}
-
-section[data-type="copyright-page"] p.author {
-  font-size: 8pt;
-}
-
-section[data-type="copyright-page"] p {
-}
-
-section[data-type="copyright-page"] p.isbn {
-}
-
-/* -------------------------------------------------------------- */
-/* -------------------------- Dedication -------------------------*/
-/* -------------------------------------------------------------- */
-
-section[data-type="dedication"] {
-  font-family: 'Crimson-Italic', serif, ArialUnicodeMS;
-  font-style: italic;
-  page: blank;
-  page-break-after: always;
-  text-align: center;
-  padding-top: 96pt;
 }
 
 /* -------------------------------------------------------------- */
@@ -276,9 +279,9 @@ section[data-type="dedication"].praise blockquote p span.emphasis em {
 
 /*--End support for emphasis in praise text and attributions--*/
 
-/* -------------------------------------------------------------- */
-/* ---------------------- Table of Contents ----------------------*/
-/* -------------------------------------------------------------- */
+/* =========================================================================== */
+/* Table of Contents Page                                                      */
+/* =========================================================================== */
 
 @page toc:first {
   @bottom-right-corner {
@@ -294,7 +297,7 @@ section[data-type="dedication"].praise blockquote p span.emphasis em {
     content: counter(page, lower-roman);
   }
   @top-left {
-    content: "Table of Contents";
+    content: string(TOCPageTitle);
   }
 }
 
@@ -303,7 +306,7 @@ section[data-type="dedication"].praise blockquote p span.emphasis em {
     content: counter(page, lower-roman);
   }
   @top-right {
-    content: "Table of Contents";
+    content: string(TOCPageTitle);
   }
 }
 
@@ -322,21 +325,23 @@ section[data-type="dedication"].praise blockquote p span.emphasis em {
   }
 }
 
+nav[data-type="toc"] { /* table of contents is a series of nested lists in a nav element */
+  page: toc;
+  prince-page-group: start;
+  page-break-before: right;
+  page-break-after: always;
+  font-variant: tabular-nums;
+  hyphens: none;
+}
+
 nav[data-type="toc"] > h1 { /* table of contents heading */
-  font-family: Merriweather, serif, ArialUnicodeMS;
+  font-family: Helvetica, phei, sans-serif;
   font-size: 16pt;
   line-height: 22pt;
   margin-top: 87pt;
   margin-bottom: 77pt;
   text-align: right;
-}
-
-nav[data-type="toc"] { /* table of contents is a series of nested lists in a nav element */
-  page: toc;
-  page-break-before: right;
-  font-variant: tabular-nums;
-  hyphens: none;
-  counter-reset: ChapterNumberTOC PartNumberTOC AppendixNumberTOC;
+  string-set: TOCPageTitle content();
 }
 
 nav[data-type="toc"] a {
@@ -359,7 +364,7 @@ nav[data-type="toc"] li[data-type="appendix"],
 nav[data-type="toc"] li[data-type="glossary"],
 nav[data-type="toc"] li[data-type="index"],
 nav[data-type="toc"] li[data-type="part"] {
-  font-family: SourceSansPro-Semibold, sans-serif, ArialUnicodeMS;
+  font-family: Helvetica, phei, sans-serif;
   font-size: 9.5pt;
   font-weight: 600;
   margin-top: 14.4pt;
@@ -371,8 +376,7 @@ nav[data-type="toc"] li[data-type="part"] {  margin-top: 24.4pt;}
 
 nav[data-type="toc"] li[data-type="preface"],
 nav[data-type="toc"] li[data-type="foreword"] {
-  font-family: SourceSansPro-Semibold, sans-serif, ArialUnicodeMS;
-  font-style: italic;
+  font-family: Helvetica, phei, sans-serif;
   font-size: 9.5pt;
   font-weight: 600;
   display: list-item;
@@ -408,18 +412,8 @@ nav[data-type="toc"] li[data-type="appendix"] li[data-type="sect2"] { /* and app
   display: none;
 }
 
-nav[data-type="toc"] li[data-type="part"]:before {
-  content: "PART " counter(PartNumberTOC, upper-roman) ":";
-  counter-increment: PartNumberTOC;
-}
-
-nav[data-type="toc"] li[data-type="chapter"]:before {
-  content: "CHAPTER " counter(ChapterNumberTOC, decimal) ": ";
-  counter-increment: ChapterNumberTOC;
-}
-
 li[data-type="sect1"], li[data-type="sect2"] {
-  font-family: SourceSansPro, sans-serif, ArialUnicodeMS;
+  font-family: Helvetica, phei, sans-serif;
   font-size: 9.5pt;
   font-weight: normal;
   page-break-after: auto;
@@ -445,23 +439,22 @@ nav[data-type="toc"] li[data-type="appendix"] {
   list-style-position: inside;
 }
 
-nav[data-type="toc"] li[data-type="appendix"]::marker {
-  content: counter(AppendixNumberTOC, upper-alpha) ".";
-  counter-increment: AppendixNumberTOC;
-  margin-right: 5pt;
-}
-
 /*hides footnotes from appearing in the TOC*/
 nav[data-type="toc"] span[data-type="footnote"] {
- display: none;
+  display: none;
 }
 
-/* -------------------------------------------------------------- */
-/* --------------------------- Headers ---------------------------*/
-/* -------------------------------------------------------------- */
-/* preface, chapter, and appendix headings */
+/* =========================================================================== */
+/* General Headings                                                            */
+/* =========================================================================== */
 
-/* shared styles for all chapter-level headings */
+h1, h2, h3, h4, h5, h6 {
+  hyphens: none;
+  text-align: left;
+  font-family: Helvetica, phei, sans-serif;
+  font-weight: normal;
+}
+
 section[data-type="preface"] > h1,
 section[data-type="foreword"] > h1,
 section[data-type="chapter"] > h1,
@@ -470,75 +463,23 @@ section[data-type="index"] > h1,
 section[data-type="glossary"] > h1,
 section[data-type="colophon"] h1,
 section.abouttheauthor h1  {
-  font-family: 'Merriweather', serif, ArialUnicodeMS;
+  font-family: Helvetica, phei, sans-serif;
   line-height: 22pt;
   margin-bottom: 0.9in;
   margin-top: 0.5in;
   text-align: right;
 }
 
-section[data-type="preface"] > h1 {
-  string-set: ChapterTitle self;
-}
-
-section[data-type="foreword"] > h1 {
-  string-set: ChapterTitle self;
-}
-
-section[data-type="chapter"] > h1 {
-  string-set: ChapterTitle self, SectionTitle self;
-  counter-increment: ChapterNumber;
-}
-
-section[data-type="appendix"] > h1 {
-  string-set: ChapterTitle self;
-  counter-increment: AppendixNumber;
-}
-
-/* chapter and appendix headings include auto-numbering */
-section[data-type="chapter"] > h1:after,
-section[data-type="appendix"] > h1:after {
-  font-size: 65pt;
-  font-family: 'SourceSansPro-ExtraLight', sans-serif, ArialUnicodeMS;
-  letter-spacing: -3pt;
-  display: block;
-  position: relative;
-  bottom: 0.445in;
-  left: 4.5in;
-  text-align: center;
-  width: 0.75in;
-}
-
-section[data-type="chapter"] > h1:after {
-  content: counter(ChapterNumber);
-}
-
-section[data-type="appendix"] > h1:after {
-  content: counter(AppendixNumber, upper-alpha);
-}
-
-/* -------------------------------------------------------------- */
-/* ---------------------- Section Headings -----------------------*/
-/* -------------------------------------------------------------- */
-
-h1, h2, h3, h4, h5, h6 {
-  hyphens: none;
-  text-align: left;
-  font-weight: normal;
-}
-
 section[data-type="sect1"] > h1 { /* A-level headings */
-  font-family: 'Merriweather', serif, ArialUnicodeMS;
   font-weight: bold;
   font-size: 12pt;
   line-height: 16pt;
   margin-top: 18pt;
   margin-bottom: 14pt;
-  string-set: SectionTitle self; /* A-heads are also displayed in chapter footers */
+  string-set: SectionTitle content(); /* A-heads are also displayed in chapter footers */
 }
 
 section[data-type="sect2"] > h2 { /* B-level headings */
-  font-family: SourceSansPro, sans-serif, ArialUnicodeMS;
   font-weight: bold;
   font-size: 11pt;
   line-height: 12pt;
@@ -547,23 +488,15 @@ section[data-type="sect2"] > h2 { /* B-level headings */
 }
 
 section[data-type="sect3"] > h3 { /* C-level headings */
-  font-family: SourceSansPro-Semibold, sans-serif, ArialUnicodeMS;
   font-size: 9.5pt;
   margin-top: 14pt;
   margin-bottom: 10pt;
   line-height: 14pt;
-  text-transform: uppercase;
 }
 
-
-/* -------------------------------------------------------------- */
-/* --------------------------- Preface ---------------------------*/
-/* -------------------------------------------------------------- */
-
-section[data-type="preface"] > h1 {
-  font-size: 16pt;
-  font-weight: normal;
-}
+/* =========================================================================== */
+/* Prefaces                                                                    */
+/* =========================================================================== */
 
 @page preface:first {
   @bottom-right-corner {
@@ -576,7 +509,7 @@ section[data-type="preface"] > h1 {
 
 @page preface:left {
   @top-left {
-    content: string(ChapterTitle);
+    content: string(PrefaceTitle);
   }
   @bottom-left-corner {
     content: counter(page, lower-roman);
@@ -585,7 +518,7 @@ section[data-type="preface"] > h1 {
 
 @page preface:right {
   @top-right {
-    content: string(ChapterTitle);
+    content: string(PrefaceTitle);
   }
   @bottom-right-corner {
     content: counter(page, lower-roman);
@@ -609,18 +542,20 @@ section[data-type="preface"] > h1 {
 
 section[data-type="preface"] {
   page: preface;
+  prince-page-group: start;
   page-break-before: right; /* forces the preface to start on a right hand page */
-  counter-reset: FigureNumber TableNumber ExampleNumber EquationNumber footnote; /* setting auto-numbers for figures, tables, and footnotes to start at 1 */
+  counter-reset: footnote;
 }
 
-/* -------------------------------------------------------------- */
-/* --------------------------- Forward ---------------------------*/
-/* -------------------------------------------------------------- */
-
-section[data-type="foreword"] > h1 {
+section[data-type="preface"] > h1 {
   font-size: 16pt;
   font-weight: normal;
+  string-set: PrefaceTitle content();
 }
+
+/* =========================================================================== */
+/* Foreword                                                                    */
+/* =========================================================================== */
 
 @page foreword:first {
   @bottom-right-corner {
@@ -633,7 +568,7 @@ section[data-type="foreword"] > h1 {
 
 @page foreword:left {
   @top-left {
-    content: string(ChapterTitle);
+    content: string(ForewordTitle);
   }
   @bottom-left-corner {
     content: counter(page, lower-roman);
@@ -642,7 +577,7 @@ section[data-type="foreword"] > h1 {
 
 @page foreword:right {
   @top-right {
-    content: string(ChapterTitle);
+    content: string(ForewordTitle);
   }
   @bottom-right-corner {
     content: counter(page, lower-roman);
@@ -666,8 +601,15 @@ section[data-type="foreword"] > h1 {
 
 section[data-type="foreword"] {
   page: foreword;
+  prince-page-group: start;
   page-break-before: right; /* forces the foreword to start on a right hand page */
-  counter-reset: FigureNumber TableNumber ExampleNumber EquationNumber footnote; /* setting auto-numbers for figures, tables, and footnotes to start at 1 */
+  counter-reset: footnote;
+}
+
+section[data-type="foreword"] > h1 {
+  font-size: 16pt;
+  font-weight: normal;
+  string-set: ForewordTitle content();
 }
 
 p.byline {
@@ -677,9 +619,9 @@ p.byline {
 
 p.byline:before { content: "\2014 " }
 
-/* -------------------------------------------------------------- */
-/* --------------------------- Parts -----------------------------*/
-/* -------------------------------------------------------------- */
+/* =========================================================================== */
+/* Parts                                                                       */
+/* =========================================================================== */
 
 div[data-type="part"] {
   page: blank;
@@ -687,29 +629,25 @@ div[data-type="part"] {
 }
 
 div[data-type="part"] > h1 {
-  font-family: 'OpenSans-CondBold', sans-serif, ArialUnicodeMS;
   font-size: 18pt;
   line-height: 22pt;
   text-align: center;
   margin-top: 0;
   margin-bottom: 28pt;
-  counter-increment: PartNumber;
 }
 
 div[data-type="part"] > h1:before {
-  font-family: 'OpenSans-Semibold', sans-serif, ArialUnicodeMS;
   font-size: 11pt;
   text-transform: uppercase;
-  content: "Part " counter(PartNumber);
   display: block;
   text-align: center;
   margin-top: 72pt;
   margin-bottom: 34pt;
 }
 
-/* -------------------------------------------------------------- */
-/* --------------------------- Chapters --------------------------*/
-/* -------------------------------------------------------------- */
+/* =========================================================================== */
+/* Chapters                                                                    */
+/* =========================================================================== */
 
 @page chapter:first {
   @top-right {
@@ -722,7 +660,7 @@ div[data-type="part"] > h1:before {
     content: counter(page);
   }
   @top-left {
-    content: "CHAPTER "counter(ChapterNumber)": "string(ChapterTitle);
+    content: string(ChapterTitle);
   }
 }
 
@@ -750,6 +688,43 @@ div[data-type="part"] > h1:before {
   }
 }
 
+section[data-type="chapter"] {
+  page: chapter;
+  prince-page-group: start;
+  page-break-before: right;
+  counter-reset: footnote;
+}
+
+section[data-type="chapter"] > h1:first-of-type {
+  string-set: ChapterTitle content(), SectionTitle content();
+}
+
+/* =========================================================================== */
+/* General Styles                                                              */
+/* =========================================================================== */
+
+body {
+  color: #000;
+  font-family: Times, psong, serif;
+  prince-text-justify: prince-cjk;
+  hyphens: auto;
+}
+
+/* general inlines */
+
+a {
+  color: cmyk(0%,0%,0%,80%);
+  text-decoration: none;
+}
+
+/* counters add auto-numbering to elements in the book.
+   This reset initiates the counters, enabling them
+   to begin numbering correctly. */
+
+body[data-type="book"] {
+  counter-reset: page 1 footnote;
+}
+
 /* --------------------------------------------------------------------- */
 /* ------------------------------ Tables ------------------------------- */
 /* --------------------------------------------------------------------- */
@@ -767,33 +742,10 @@ table caption {
   margin-bottom: 5pt;
   page-break-after: avoid;
   text-align: left;
-  font-family: Merriweather, serif, ArialUnicodeMS;
-  font-style: italic;
+  font-family: Helvetica, phei, sans-serif;
   font-size: 7.5pt;
   line-height: 10pt;
   hyphens: none;
-}
-
-table caption:before {
-  font-family: SourceSansPro-Black, sans-serif, ArialUnicodeMS;
-  font-style: normal;
-  font-size: 8.5pt;
-  counter-increment: TableNumber;
-  content: "TABLE " counter(ChapterNumber) "-" counter(TableNumber)". ";
-  margin-bottom: 7.2pt;
-  margin-top: 0;
-}
-
-section[data-type="preface"] table caption:before {
-  content: "TABLE P-"counter(TableNumber)". ";
-}
-
-section[data-type="foreword"] table caption:before {
-  content: "TABLE F-"counter(TableNumber)". ";
-}
-
-section[data-type="appendix"] table caption:before {
-  content: "TABLE " counter(AppendixNumber)"-"counter(TableNumber)". ";
 }
 
 tr {
@@ -801,7 +753,7 @@ tr {
 }
 
 th { /* table heading rows */
-  font-family: SourceSansPro, sans-serif, ArialUnicodeMS;
+  font-family: Helvetica, phei, sans-serif;
   font-weight: bold;
   font-size: 9pt;
   text-align: left;
@@ -815,7 +767,7 @@ th, td {
 }
 
 td, table p { /* table body text */
-  font-family: SourceSansPro, sans-serif, ArialUnicodeMS;
+  font-family: Helvetica, phei, sans-serif;
   font-size: 9pt;
   line-height: 10pt;
 }
@@ -830,10 +782,11 @@ td pre.programlisting, td pre.screen, td pre.literallayout, td code { /* allow c
   word-wrap: break-word;
 }
 
-/* --------------------------------------------------------------------- */
-/* ------------------------------ Figures ------------------------------ */
-/* --------------------------------------------------------------------- */
-figure {
+/* =========================================================================== */
+/* Figure                                                                      */
+/* =========================================================================== */
+
+div.figure {
   display: block;
   border-top: 0.5pt solid cmyk(0%,0%,0%,100%);
   border-bottom: 0.5pt solid cmyk(0%,0%,0%,100%);
@@ -844,41 +797,19 @@ figure {
   overflow: auto;
 }
 
-figure figcaption {
+div.figcaption {
   display: block;
-  -ah-float: outside page;
+  float: outside page;
   clear: both;
   margin-left: -1.25in;
   margin-right: -1.25in;
   width: 1in;
   text-align: left;
-  font-family: Merriweather, serif, ArialUnicodeMS;
+  font-family: Helvetica, phei, sans-serif;
   font-style: italic;
   font-size: 7.5pt;
   line-height: 10pt;
   hyphens: none;
-}
-
-figcaption:before {
-  font-family: SourceSansPro-Black, sans-serif, ArialUnicodeMS;
-  font-style: normal;
-  font-size: 8.5pt;
-  counter-increment: FigureNumber;
-  content: "FIGURE " counter(ChapterNumber) "-" counter(FigureNumber);
-  display: block;
-  margin-bottom: 7.2pt;
-}
-
-section[data-type="preface"] figcaption:before {
-  content: "Figure P-"counter(FigureNumber)". ";
-}
-
-section[data-type="foreword"] figcaption:before {
-  content: "Figure F-"counter(FigureNumber)". ";
-}
-
-section[data-type="appendix"] figcaption:before {
-  content: "Figure " counter(AppendixNumber)"-"counter(FigureNumber)". ";
 }
 
 img {
@@ -886,7 +817,7 @@ img {
   margin: 15pt auto;
 }
 
-figure img {
+div.figure img {
   max-width: 4.375in;
   margin: 0 auto;
 }
@@ -896,7 +827,7 @@ dt img {
   margin: 0;
 }
 
-figure div.border-box { display: inline }
+div.figure div.border-box { display: inline }
 
 /*figures in tables*/
 table figure {
@@ -922,15 +853,15 @@ figure.fullpage img {
 }
 
 figure.fullpage figcaption {
-  -ah-float: none;
+  float: none;
   display: none;
 }
 
-/* -------------------------------------------------------------- */
-/* -------------------------- Sidebars ---------------------------*/
-/* -------------------------------------------------------------- */
+/* =========================================================================== */
+/* Sidebar                                                                     */
+/* =========================================================================== */
 
-aside[data-type="sidebar"] { /* sidebar containers */
+div.sidebar { /* sidebar containers */
   background-color: cmyk(0%,0%,0%,15%);
   margin: 0.25in -1.625in;
   padding: 0.25in 1.625in;
@@ -938,36 +869,32 @@ aside[data-type="sidebar"] { /* sidebar containers */
   clear: both;
 }
 
-aside h5 { /* sidebar titles */
-  font-family: SourceSansPro-Bold, sans-serif, ArialUnicodeMS;
+div.sidebar h5 { /* sidebar titles */
   font-size: 11pt;
   line-height: 13pt;
   text-align: center;
-  text-transform: uppercase;
   margin-bottom: 0.2in;
   margin-top: 0;
 }
 
-aside h6 { /* sidebar subtitles */
+div.sidebar h6 { /* sidebar subtitles */
 }
 
-aside p, aside dd { /* sidebar text */
+div.sidebar p, div.sidebar dd { /* sidebar text */
   font-size: 7.5pt;
-  font-family: Merriweather, serif, ArialUnicodeMS;
   line-height: 11.5pt;
   text-indent: 0;
   margin-bottom: 6pt;
 }
 
-aside dt {
+div.sidebar dt {
   font-size: 7.5pt;
-  font-family: Merriweather, serif, ArialUnicodeMS;
   font-weight: bold;
 }
 
-/* -------------------------------------------------------------- */
-/* ------------------------ Admonitions --------------------------*/
-/* -------------------------------------------------------------- */
+/* =========================================================================== */
+/* Admonitions                                                                 */
+/* =========================================================================== */
 
 div[data-type="note"],
 div[data-type="warning"],
@@ -987,7 +914,6 @@ div[data-type="warning"] p,
 div[data-type="tip"] p,
 div[data-type="caution"] p,
 div[data-type="important"] p { /* admon text */
-  font-family: Merriweather, serif, ArialUnicodeMS;
   text-align: left;
   text-indent: 0;
   font-size: 7.5pt;
@@ -1000,7 +926,6 @@ div[data-type="warning"] li,
 div[data-type="tip"] li,
 div[data-type="caution"] li,
 div[data-type="important"] li {
-  font-family: Merriweather, serif, ArialUnicodeMS;
   font-size: 7.5pt;
 }
 
@@ -1009,9 +934,7 @@ div[data-type="warning"] h1,
 div[data-type="tip"] h1,
 div[data-type="caution"] h1,
 div[data-type="important"] h1 { /* admonition titles */
-  font-family: 'SourceSansPro-Black', sans-serif, ArialUnicodeMS;
   font-size: 8.5pt;
-  text-transform: uppercase;
   letter-spacing: 0.75pt;
   margin-bottom: 7pt;
   margin-top: 0;
@@ -1026,65 +949,134 @@ div[data-type="important"] pre {
   margin: 0 0 6pt 4pt;
 }
 
-/* -------------------------------------------------------------- */
-/* ---------------------------- Code -----------------------------*/
-/* -------------------------------------------------------------- */
+/* =========================================================================== */
+/* Code                                                                        */
+/* =========================================================================== */
 
 pre, code { /* monospace font for both code blocks and inline code */
-  font-family: 'UbuntuMono', monospace, ArialUnicodeMS;
+  font-family: pmono, phei, monospace;
 }
 
 pre { /* code blocks */
   font-size: 9pt;
   line-height: 11pt;
   margin: 12pt 0 12pt 0.167in;
-  -ah-ignore-leading-newline: true;
 }
 
 code { font-size: 107%; }
 
 pre code { font-size: inherit; }
 
-div[data-type="example"] h5 {
+div[data-type="example"] h5,
+div[data-type="listing"] h5 {
   margin-bottom: 5pt;
   page-break-after: avoid;
   text-align: left;
-  font-family: Merriweather, serif, ArialUnicodeMS;
-  font-style: italic;
+  font-family: Helvetica, phei, sans-serif;
   font-size: 7.5pt;
   line-height: 10pt;
   hyphens: none;
-}
-
-div[data-type="example"] h5:before {
-  font-family: 'SourceSansPro-Black', sans-serif, ArialUnicodeMS;
-  font-style: normal;
-  font-size: 8.5pt;
-  counter-increment: ExampleNumber;
-  content: "EXAMPLE " counter(ChapterNumber) "-" counter(ExampleNumber)". ";
-  margin-bottom: 7.2pt;
-  margin-top: 0;
-}
-
-section[data-type="preface"] div[data-type="example"] h5:before {
-  content: "EXAMPLE P-"counter(ExampleNumber)". ";
-}
-
-section[data-type="foreword"] div[data-type="example"] h5:before {
-  content: "EXAMPLE F-"counter(ExampleNumber)". ";
-}
-
-section[data-type="appendix"] div[data-type="example"] h5:before {
-  content: "EXAMPLE " counter(AppendixNumber)"-"counter(ExampleNumber)". ";
 }
 
 div[data-type="example"] pre {
   margin-left: 0;
 }
 
-/* -------------------------------------------------------------- */
-/* ------------------------ Blockquotes --------------------------*/
-/* -------------------------------------------------------------- */
+pre .hll { background-color: #ffffcc }
+pre .c { color: #0099FF; font-style: italic } /* Comment */
+pre .err { color: #AA0000 } /* Error */
+pre .k { color: #006699; font-weight: bold } /* Keyword */
+pre .o { color: #555555 } /* Operator */
+pre .cm { color: #35586C; font-style: italic } /* Comment.Multiline */
+pre .cp { color: #009999 } /* Comment.Preproc */
+pre .c1 { color: #35586C; font-style: italic } /* Comment.Single */
+pre .cs { color: #35586C; font-weight: bold; font-style: italic } /* Comment.Special */
+pre .gd { background-color: #FFCCCC } /* Generic.Deleted */
+pre .ge { font-style: italic } /* Generic.Emph */
+pre .gr { color: #FF0000 } /* Generic.Error */
+pre .gh { color: #003300; font-weight: bold } /* Generic.Heading */
+pre .gi { background-color: #CCFFCC } /* Generic.Inserted */
+
+/* Overriding default manni style of #AAAAAA gray for Generic Output with #000000 black, which is better suited to ORM terminal output */
+pre .go { color: #000000 } /* Generic.Output  */
+
+pre .gp { color: #000099; font-weight: bold } /* Generic.Prompt */
+pre .gs { font-weight: bold } /* Generic.Strong */
+pre .gu { color: #003300; font-weight: bold } /* Generic.Subheading */
+pre .gt { color: #99CC66 } /* Generic.Traceback */
+pre .kc { color: #006699; font-weight: bold } /* Keyword.Constant */
+pre .kd { color: #006699; font-weight: bold } /* Keyword.Declaration */
+pre .kn { color: #006699; font-weight: bold } /* Keyword.Namespace */
+pre .kp { color: #006699 } /* Keyword.Pseudo */
+pre .kr { color: #006699; font-weight: bold } /* Keyword.Reserved */
+pre .kt { color: #007788; font-weight: bold } /* Keyword.Type */
+pre .m { color: #FF6600 } /* Literal.Number */
+pre .s { color: #CC3300 } /* Literal.String */
+pre .na { color: #330099 } /* Name.Attribute */
+pre .nb { color: #336666 } /* Name.Builtin */
+pre .nc { color: #00AA88; font-weight: bold } /* Name.Class */
+pre .no { color: #336600 } /* Name.Constant */
+pre .nd { color: #9999FF } /* Name.Decorator */
+pre .ni { color: #999999; font-weight: bold } /* Name.Entity */
+pre .ne { color: #CC0000; font-weight: bold } /* Name.Exception */
+pre .nf { color: #CC00FF } /* Name.Function */
+pre .nl { color: #9999FF } /* Name.Label */
+pre .nn { color: #00CCFF; font-weight: bold } /* Name.Namespace */
+pre .nt { color: #330099; font-weight: bold } /* Name.Tag */
+pre .nv { color: #003333 } /* Name.Variable */
+pre .ow { color: #000000; font-weight: bold } /* Operator.Word */
+pre .w { color: #bbbbbb } /* Text.Whitespace */
+pre .mf { color: #FF6600 } /* Literal.Number.Float */
+pre .mh { color: #FF6600 } /* Literal.Number.Hex */
+pre .mi { color: #FF6600 } /* Literal.Number.Integer */
+pre .mo { color: #FF6600 } /* Literal.Number.Oct */
+pre .sb { color: #CC3300 } /* Literal.String.Backtick */
+pre .sc { color: #CC3300 } /* Literal.String.Char */
+pre .sd { color: #CC3300; font-style: italic } /* Literal.String.Doc */
+pre .s2 { color: #CC3300 } /* Literal.String.Double */
+pre .se { color: #CC3300; font-weight: bold } /* Literal.String.Escape */
+pre .sh { color: #CC3300 } /* Literal.String.Heredoc */
+pre .si { color: #AA0000 } /* Literal.String.Interpol */
+pre .sx { color: #CC3300 } /* Literal.String.Other */
+pre .sr { color: #33AAAA } /* Literal.String.Regex */
+pre .s1 { color: #CC3300 } /* Literal.String.Single */
+
+/* Overriding manni default yellow #FFCC33 with brown #AA6600, which is easier to read */
+pre .ss { color: #AA6600 } /* Literal.String.Symbol */
+
+pre .bp { color: #336666 } /* Name.Builtin.Pseudo */
+pre .vc { color: #003333 } /* Name.Variable.Class */
+pre .vg { color: #003333 } /* Name.Variable.Global */
+pre .vi { color: #003333 } /* Name.Variable.Instance */
+pre .il { color: #FF6600 } /* Literal.Number.Integer.Long */
+
+/* Sanders's additions to manni */
+pre .g { color: #005500 } /* Generic */
+pre .l { color: #CC6600 } /* Literal */
+pre .l { color: #FF9900 } /* Literal.Date */
+pre .n { color: #000088 } /* Name */
+pre .nx { color: #000088 } /* Name.Other */
+pre .py { color: #9966FF } /* Name.Property */
+pre .p { color: #000000 } /* Punctuation */
+pre .x { color: #FF0066 } /* Other */
+
+/* Chacon's additions to make command line look more like a command line */
+pre[data--language="console"] {
+  background: #ddd;
+  padding: 10px;
+}
+pre[data--language="console"] .go {
+  color: #555;
+  font-size: 1.0em;
+}
+pre[data--language="console"] .gp {
+  color: #009900;
+  font-weight: bold;
+}
+
+/* =========================================================================== */
+/* Blockquote                                                                  */
+/* =========================================================================== */
 
 blockquote {
   margin: 15pt 0.1667in;
@@ -1092,7 +1084,6 @@ blockquote {
 
 blockquote p {
   text-indent: 0;
-  font-family: 'SourceSansPro', sans-serif, ArialUnicodeMS;
   font-size: 7.5pt;
 }
 
@@ -1101,9 +1092,9 @@ p[data-type="attribution"] {
   margin-top: 6pt;
 }
 
-/* -------------------------------------------------------------- */
-/* ---------------------------- Math -----------------------------*/
-/* -------------------------------------------------------------- */
+/* =========================================================================== */
+/* Math                                                                        */
+/* =========================================================================== */
 
 div[data-type="equation"] {
   margin: 12pt 0 12pt 0.167in;
@@ -1116,7 +1107,7 @@ mml|math {
 }
 
 div[data-type="equation"] h5 {
-  -ah-float: outside page;
+  float: outside page;
   clear: both;
   margin: 0 -1.25in;
   padding-top: 5pt;
@@ -1153,15 +1144,9 @@ section[data-type="appendix"] div[data-type="equation"] h5:before {
   content: "EQUATION " counter(AppendixNumber)"-"counter(EquationNumber)". ";
 }
 
-/* -------------------------------------------------------------- */
-/* ----------------------- Counter Reset -------------------------*/
-/* -------------------------------------------------------------- */
-
-section[data-type="chapter"] {
-  page: chapter;
-  page-break-before: right; /* forces new chapters to start on a right hand page */
-  counter-reset: TableNumber FigureNumber ExampleNumber EquationNumber footnote;
-}
+/* =========================================================================== */
+/*  Page Number Restart                                                        */
+/* =========================================================================== */
 
 section[data-type="chapter"].pagenumrestart
 { counter-reset: page 1 FigureNumber TableNumber ExampleNumber EquationNumber footnote}
@@ -1169,9 +1154,10 @@ section[data-type="chapter"].pagenumrestart
 div[data-type="part"].pagenumrestart
 { counter-reset: page 1 FigureNumber TableNumber ExampleNumber EquationNumber footnote}
 
-/* -------------------------------------------------------------- */
-/* ------------------------ Appendicies --------------------------*/
-/* -------------------------------------------------------------- */
+/* =========================================================================== */
+/*  Appendicies                                                                */
+/* =========================================================================== */
+
 @page appendix:first {
   @bottom-left {
     content: normal;
@@ -1183,7 +1169,7 @@ div[data-type="part"].pagenumrestart
     content: counter(page);
   }
   @bottom-right {
-    content: "Appendix "counter(AppendixNumber, upper-alpha)", "string(ChapterTitle);
+    content: string(AppendixTitle);
   }
 }
 
@@ -1198,20 +1184,24 @@ div[data-type="part"].pagenumrestart
 
 section[data-type="appendix"] {
   page: appendix;
+  prince-page-group: start;
   page-break-before: right; /* forces new chapters to start on a right hand page */
-  counter-reset: FigureNumber TableNumber ExampleNumber EquationNumber footnote;
+  counter-reset: footnote;
 }
 
-/* --------------------------------------------------------------------- */
-/* ------------------------------- Lists ------------------------------- */
-/* --------------------------------------------------------------------- */
+section[data-type="appendix"] > h1:first-of-type {
+  string-set: AppendixTitle content();
+}
+
+/* =========================================================================== */
+/* List                                                                        */
+/* =========================================================================== */
 
 ul, ol { /* bulleted and numbered lists */
   margin: 7pt 0 7pt .33in;
 }
 
 ul li, ol li {
-  font-family: SourceSansPro, ArialUnicodeMS;
   font-size: 9.5pt;
   margin-top: 3pt;
 }
@@ -1221,7 +1211,7 @@ dl { /* definition lists */
 }
 
 dt { /* definition list terms */
-  font-family: SourceSansPro-Semibold, ArialUnicodeMS;
+  font-family: Helvetica, phei, sans-serif;
   font-size: 9.5pt;
   line-height: 14pt;
   margin-top: 7pt;
@@ -1256,12 +1246,9 @@ dl.calloutlist dt {
   page-break-after: avoid;
 }
 
-
-/* --------------------------------------------------------------------- */
-/* ------------------------------- Index ------------------------------- */
-/* --------------------------------------------------------------------- */
-
-section[data-type="index"] { page: index }
+/* =========================================================================== */
+/* Index                                                                       */
+/* =========================================================================== */
 
 @page index:left {
   @bottom-left {
@@ -1300,6 +1287,8 @@ section[data-type="index"] { page: index }
   margin: 0 -9pt -9pt 0;
   }
 }
+
+section[data-type="index"] { page: index }
 
 .indexnote {
   content: "Weâd like to hear your suggestions for improving our indexes. Send email to index@oreilly.com.";
@@ -1389,20 +1378,26 @@ section[data-type="glossary"] dd p { font-size: 9pt }
 
 section[data-type="glossary"] dd { font-size: 9pt }
 
-/* -------------------------------------------------------------- */
-/* --------------------- Footnote Settings ---------------------- */
-/* -------------------------------------------------------------- */
+/* =========================================================================== */
+/*  Footnotes                                                                  */
+/* =========================================================================== */
+
 span[data-type="footnote"],
 h1 > span[data-type="footnote"] {
-  -ah-float: footnote;
+  display: none;
+  display: prince-footnote;
+  float: footnote;
+  position: footnote;
+  counter-increment: footnote;
   font-size: 8pt;
   line-height: 10pt;
   margin-left: 8pt;
   margin-bottom: 3pt;
   text-align: left;
   text-indent: 0;
-  font-family: SourceSansPro, sans-serif, ArialUnicodeMS;
+  font-family: Helvetica, phei, sans-serif;
   font-weight: normal;
+  footnote-style-position: inside;
 }
 
 ::footnote-call,
@@ -1411,37 +1406,45 @@ h1 > span[data-type="footnote"] {
   line-height: 5pt;
 }
 
-::footnote-call { font-size: 6pt }
+::footnote-call {
+  vertical-align: super;
+  font-size: 6pt;
+}
 
-::footnote-marker { font-size: 7pt }
+::footnote-marker {
+  content: counter(footnote)".";
+  font-size: 7pt;
+}
 
-/* --------------------------------------------------------------------- */
-/* --------------------------- Bibliography ---------------------------- */
-/* --------------------------------------------------------------------- */
-
-section[data-type="bibliography"] { page: bibliography }
+/* =========================================================================== */
+/* Bibliography                                                                */
+/* =========================================================================== */
 
 @page bibliography:first {
   @top-right { content: none }
 }
 
 @page bibliography:left {
-  @bottom-left { content: counter(page);
-      font-family: SourceSansPro, sans-serif, ArialUnicodeMS;
+  @bottom-left {
+    content: counter(page);
  }
 }
 
 @page bibliography:right {
-  @bottom-right { content: counter(page);
-      font-family: SourceSansPro, sans-serif, ArialUnicodeMS;
+  @bottom-right {
+    content: counter(page);
  }
 }
 
-/* --------------------------------------------------------------------- */
-/* -------------------------- About/Colophon --------------------------- */
-/* --------------------------------------------------------------------- */
+section[data-type="bibliography"] {
+  page: bibliography;
+  prince-page-group: start;
+  page-break-before: right;
+}
 
-section.abouttheauthor { page: abouttheauthor }
+/* =========================================================================== */
+/*  About/Colophon                                                             */
+/* =========================================================================== */
 
 @page abouttheauthor {
   border-bottom: none;
@@ -1450,15 +1453,12 @@ section.abouttheauthor { page: abouttheauthor }
     @bottom-right { content: none }
 }
 
-section[data-type="colophon"] { page: colophon }
-
 @page colophon {
   border-bottom: none;
     @top-right { content: none }
     @bottom-left { content: none }
     @bottom-right { content: none }
 }
-
 
 @page toc:blank {
   @bottom-left { content: none }
@@ -1488,6 +1488,9 @@ section[data-type="colophon"] { page: colophon }
   @bottom-left { content: none }
   @bottom-right { content: none }
 }
+
+section.abouttheauthor { page: abouttheauthor }
+section[data-type="colophon"] { page: colophon }
 
 /* --------------------------------------------------------------------- */
 /* ----------------------- Styling for Comments ------------------------ */
@@ -1536,141 +1539,91 @@ div.comment-identifier img,
 div.comment-identifier i { display: none }
 
 
-/* --------------------------------------------------------------------- */
-/* --------------------------- PDF Bookmarks --------------------------- */
-/* --------------------------------------------------------------------- */
-/* revise these for HTMLBook */
+/* =========================================================================== */
+/*  PDF bookmarks                                                              */
+/* =========================================================================== */
 
-figure[data-type="cover"] {
-  bookmark-level: 1;
-  bookmark-state: closed;
-  bookmark-label: "Cover";
+/* no bookmarking */
+section[data-type="titlepage"] > h1,
+section[data-type="titlepage"] > h2,
+section[data-type="copyright-page"] >h1,
+h4, h5,
+div[data-type="note"] h1,
+div[data-type="tip"] h1,
+div[data-type="warning"] h1 {
+  prince-bookmark-level: none;
 }
 
-section[data-type="copyright-page"] {
-  bookmark-level: 1;
-  bookmark-state: closed;
-  bookmark-label: "Copyright";
+/* Common */
+div[data-type="cover"],
+nav[data-type="toc"] > h1,
+section[data-type="foreword"] > h1,
+section[data-type="preface"] > h1,
+section[data-type="introduction"] > h1,
+section[data-type="afterword"] > h1,
+section[data-type="conclusion"] > h1,
+div[data-type="part"] > h1 {
+  prince-bookmark-level: 1;
 }
 
-nav[data-type="toc"] {
-  bookmark-level: 1;
-  bookmark-state: closed;
-  bookmark-label: "Table of Contents";
+/* No Parts */
+
+section[data-type="chapter"] > h1:first-of-type {
+  prince-bookmark-level: 1;
 }
 
-section[data-type="foreword"] {
-  bookmark-level: 1;
-  bookmark-state: closed;
-  bookmark-label: attr(data-pdf-bookmark);
+section[data-type="sect1"] > h1 {
+  prince-bookmark-level: 2;
 }
 
-section[data-type="preface"] {
-  bookmark-level: 1;
-  bookmark-state: closed;
-  bookmark-label: attr(data-pdf-bookmark);
+section[data-type="sect2"] > h2 {
+  prince-bookmark-level: 3;
 }
 
-div[data-type="part"] {
-  bookmark-level: 1;
-  bookmark-state: closed;
-  bookmark-label: attr(data-pdf-bookmark);
+section[data-type="sect3"] > h3 {
+  prince-bookmark-level: 4;
 }
 
-/* ---------- Bookmark logic for titles that don't have parts ---------- */
-
-section[data-type="chapter"] {
-  bookmark-level: 1;
-  bookmark-state: closed;
-  bookmark-label: attr(data-pdf-bookmark);
+section[data-type="appendix"] > h1 {
+  prince-bookmark-level: 1;
 }
 
-section[data-type="sect1"] {
-  bookmark-level: 2;
-  bookmark-state: closed;
-  bookmark-label: attr(data-pdf-bookmark);
+section[data-type="glossary"] > h1 {
+  prince-bookmark-level: 1;
 }
 
-section[data-type="sect2"] {
-  bookmark-level: 3;
-  bookmark-state: closed;
-  bookmark-label: attr(data-pdf-bookmark);
+section[data-type="index"] > h1 {
+  prince-bookmark-level: 1;
 }
 
-section[data-type="appendix"] {
-  bookmark-level: 1;
-  bookmark-state: closed;
-  bookmark-label: attr(data-pdf-bookmark);
+section.abouttheauthor > h1 {
+  prince-bookmark-level: 1;
 }
 
-section[data-type="glossary"] {
-  bookmark-level: 1;
-  bookmark-state: closed;
-  bookmark-label: attr(data-pdf-bookmark);
+/* Do Has Parts */
+
+div[data-type="part"] section[data-type="chapter"] > h1:first-of-type {
+  prince-bookmark-level: 2;
 }
 
-section[data-type="bibliography"] {
-  bookmark-level: 1;
-  bookmark-state: closed;
-  bookmark-label: attr(data-pdf-bookmark);
+div[data-type="part"] section[data-type="sect1"] > h1 {
+  prince-bookmark-level: 3;
 }
 
-section[data-type="index"] {
-  bookmark-level: 1;
-  bookmark-state: closed;
-  bookmark-label: "Index";
+div[data-type="part"] section[data-type="sect2"] > h2 {
+  prince-bookmark-level: 4;
 }
 
-section[data-type="afterword"] {
-  bookmark-level: 1;
-  bookmark-state: closed;
-  bookmark-label: attr(data-pdf-bookmark);
+div[data-type="part"] section[data-type="sect3"] > h3 {
+  prince-bookmark-level: none;
 }
 
-section.abouttheauthor {
-  bookmark-level: 1;
-  bookmark-state: closed;
-  bookmark-label: attr(data-pdf-bookmark);
+div[data-type="part"] section[data-type="appendix"] > h1 {
+  prince-bookmark-level: 2;
 }
 
-/* ----------- Bookmark logic for titles that do have parts: ----------- */
-/* ------- chapters, appendixes, glossaries, sect1s, and sect2s -------- */
-/* --------------- within a part are bumped down a level --------------- */
-
-div[data-type="part"] section[data-type="chapter"] {
-  bookmark-level: 2;
-  bookmark-state: closed;
-  bookmark-label: attr(data-pdf-bookmark);
-}
-
-div[data-type="part"] section[data-type="sect1"] {
-  bookmark-level: 3;
-  bookmark-state: closed;
-  bookmark-label: attr(data-pdf-bookmark);
-}
-
-div[data-type="part"] section[data-type="sect2"] {
-  bookmark-level: 4;
-  bookmark-state: closed;
-  bookmark-label: attr(data-pdf-bookmark);
-}
-
-div[data-type="part"] section[data-type="afterword"] {
-  bookmark-level: 2;
-  bookmark-state: closed;
-  bookmark-label: attr(data-pdf-bookmark);
-}
-
-div[data-type="part"] section[data-type="appendix"] {
-  bookmark-level: 2;
-  bookmark-state: closed;
-  bookmark-label: attr(data-pdf-bookmark);
-}
-
-div[data-type="part"] section[data-type="glossary"] {
-  bookmark-level: 2;
-  bookmark-state: closed;
-  bookmark-label: attr(data-pdf-bookmark);
+div[data-type="part"] section[data-type="glossary"] > h1 {
+  prince-bookmark-level: 2;
 }
 
 /* --------------------------------------------------------------------- */
@@ -1692,85 +1645,3 @@ div.hard-pagebreak {
 .width-50 { width: 50% }
 .width-75 { width: 75% }
 .width-100 { width: 100% }
-
-
-/* syntax highlighting and coloring text in general */
-
-/* Pygments with manni theme */
-pre code.hll { background-color: #ffffcc }
-pre code.c { color: #0099FF; font-style: italic } /* Comment */
-pre code.err { color: #AA0000 } /* Error */
-pre code.k { color: #006699; font-weight: bold } /* Keyword */
-pre code.o { color: #555555 } /* Operator */
-pre code.cm { color: #35586C; font-style: italic } /* Comment.Multiline */
-pre code.cp { color: #009999 } /* Comment.Preproc */
-pre code.c1 { color: #35586C; font-style: italic } /* Comment.Single */
-pre code.cs { color: #35586C; font-weight: bold; font-style: italic } /* Comment.Special */
-pre code.gd { background-color: #FFCCCC } /* Generic.Deleted */
-pre code.ge { font-style: italic } /* Generic.Emph */
-pre code.gr { color: #FF0000 } /* Generic.Error */
-pre code.gh { color: #003300; font-weight: bold } /* Generic.Heading */
-pre code.gi { background-color: #CCFFCC } /* Generic.Inserted */
-
-/* Overriding default manni style of #AAAAAA gray for Generic Output with #000000 black, which is better suited to ORM terminal output */
-pre code.go { color: #000000 } /* Generic.Output  */
-
-pre code.gp { color: #000099; font-weight: bold } /* Generic.Prompt */
-pre code.gs { font-weight: bold } /* Generic.Strong */
-pre code.gu { color: #003300; font-weight: bold } /* Generic.Subheading */
-pre code.gt { color: #99CC66 } /* Generic.Traceback */
-pre code.kc { color: #006699; font-weight: bold } /* Keyword.Constant */
-pre code.kd { color: #006699; font-weight: bold } /* Keyword.Declaration */
-pre code.kn { color: #006699; font-weight: bold } /* Keyword.Namespace */
-pre code.kp { color: #006699 } /* Keyword.Pseudo */
-pre code.kr { color: #006699; font-weight: bold } /* Keyword.Reserved */
-pre code.kt { color: #007788; font-weight: bold } /* Keyword.Type */
-pre code.m { color: #FF6600 } /* Literal.Number */
-pre code.s { color: #CC3300 } /* Literal.String */
-pre code.na { color: #330099 } /* Name.Attribute */
-pre code.nb { color: #336666 } /* Name.Builtin */
-pre code.nc { color: #00AA88; font-weight: bold } /* Name.Class */
-pre code.no { color: #336600 } /* Name.Constant */
-pre code.nd { color: #9999FF } /* Name.Decorator */
-pre code.ni { color: #999999; font-weight: bold } /* Name.Entity */
-pre code.ne { color: #CC0000; font-weight: bold } /* Name.Exception */
-pre code.nf { color: #CC00FF } /* Name.Function */
-pre code.nl { color: #9999FF } /* Name.Label */
-pre code.nn { color: #00CCFF; font-weight: bold } /* Name.Namespace */
-pre code.nt { color: #330099; font-weight: bold } /* Name.Tag */
-pre code.nv { color: #003333 } /* Name.Variable */
-pre code.ow { color: #000000; font-weight: bold } /* Operator.Word */
-pre code.w { color: #bbbbbb } /* Text.Whitespace */
-pre code.mf { color: #FF6600 } /* Literal.Number.Float */
-pre code.mh { color: #FF6600 } /* Literal.Number.Hex */
-pre code.mi { color: #FF6600 } /* Literal.Number.Integer */
-pre code.mo { color: #FF6600 } /* Literal.Number.Oct */
-pre code.sb { color: #CC3300 } /* Literal.String.Backtick */
-pre code.sc { color: #CC3300 } /* Literal.String.Char */
-pre code.sd { color: #CC3300; font-style: italic } /* Literal.String.Doc */
-pre code.s2 { color: #CC3300 } /* Literal.String.Double */
-pre code.se { color: #CC3300; font-weight: bold } /* Literal.String.Escape */
-pre code.sh { color: #CC3300 } /* Literal.String.Heredoc */
-pre code.si { color: #AA0000 } /* Literal.String.Interpol */
-pre code.sx { color: #CC3300 } /* Literal.String.Other */
-pre code.sr { color: #33AAAA } /* Literal.String.Regex */
-pre code.s1 { color: #CC3300 } /* Literal.String.Single */
-
-/* Overriding manni default yellow #FFCC33 with brown #AA6600, which is easier to read */
-pre code.ss { color: #AA6600 } /* Literal.String.Symbol */
-
-pre code.bp { color: #336666 } /* Name.Builtin.Pseudo */
-pre code.vc { color: #003333 } /* Name.Variable.Class */
-pre code.vg { color: #003333 } /* Name.Variable.Global */
-pre code.vi { color: #003333 } /* Name.Variable.Instance */
-pre code.il { color: #FF6600 } /* Literal.Number.Integer.Long */
-
-/* Sanders's additions to manni */
-pre code.g { color: #005500 } /* Generic */
-pre code.l { color: #CC6600 } /* Literal */
-pre code.l { color: #FF9900 } /* Literal.Date */
-pre code.n { color: #000088 } /* Name */
-pre code.nx { color: #000088 } /* Name.Other */
-pre code.py { color: #9966FF } /* Name.Property */
-pre code.p { color: #000000 } /* Punctuation */
-pre code.x { color: #FF0066 } /* Other */
