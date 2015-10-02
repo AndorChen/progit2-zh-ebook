@@ -6,7 +6,7 @@
 :email:
 :translator: 中文版翻译团队
 :translator-email:
-:revnumber: 2.1.0-1
+:revnumber: 2.1.0.1
 :revdate: 2015-10-02T20:00:00+08:00
 :lang: zh-CN
 :description: Pro Git 原书第 2 版
