@@ -218,6 +218,7 @@ h1 + p, h2 + p, h3 + P {
 
 p, dd { /* general text styles */
   font-family: Times, psong, serif;
+  text-indent: 2em;
   font-size: 9.5pt;
   line-height: 13pt;
   margin: 0;
