@@ -1,0 +1,3 @@
+[submodule "progit2-zh"]
+	path = progit2-zh
+	url = git@github.com:progit/progit2-zh.git

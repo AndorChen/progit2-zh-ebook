@@ -1,0 +1,35 @@
+= Pro Git
+:slug: progit2-zh
+:subtitle:
+:edition: 第 2 版
+:author: Scott Chacon 和 Ben Straub
+:email:
+:translator: 中文版翻译团队
+:translator-email:
+:revnumber: 2.1.0
+:revdate: 2015-10-02T20:00:00+08:00
+:lang: zh-CN
+:description: Pro Git 原书第 2 版
+:keywords: git
+:uuid: urn:uuid:46368770-4b1a-0133-8757-482a140fb2a7
+:author-label: {author} 著
+:translator-label: {translator} 译
+:version-label: rev
+:toc:
+:toc-title: 目录
+:source2-caption: 代码清单 %NUM%.%SUBNUM%
+:image-caption: 图 %NUM%.%SUBNUM%
+:table-caption: 表 %NUM%.%SUBNUM%
+:sidebar-caption: 旁注 %NUM%.%SUBNUM%
+:caption-trailing: ：
+:chapter-caption: 第 %NUM% 章
+:section-caption: %NUM% 节
+:appendix-caption: 附录 %NUM%
+:epub-identifier-scheme: uuid
+:highlight:
+:pdf-cover-image: cover.jpg
+:epub-cover-image: cover.jpg
+:cover-page-title: 封面
+
+include::tmp/preface.adoc[]
+include::tmp/progit.adoc[]
