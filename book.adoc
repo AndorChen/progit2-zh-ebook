@@ -33,4 +33,6 @@
 
 include::tmp/preface.adoc[]
 
+:numbered:
+
 include::tmp/progit.adoc[]
