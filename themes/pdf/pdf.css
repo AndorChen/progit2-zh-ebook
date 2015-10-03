@@ -153,12 +153,15 @@ section[data-type="titlepage"] h1 {
   font-weight: normal;
 }
 
-
 section[data-type="titlepage"] p[data-type="author"],
 section[data-type="titlepage"] p[data-type="translator"] {
   font-size: 11pt;
   margin-top: 66pt;
   text-align: right;
+}
+
+section[data-type="titlepage"] p[data-type="translator"] {
+  margin-top: 0;
 }
 
 .revinfo {
@@ -201,6 +204,14 @@ section[data-type="dedication"] {
   page-break-after: always;
   text-align: center;
   padding-top: 96pt;
+}
+
+section[data-type="dedication"] p {
+  text-indent: 0;
+}
+
+section[data-type="dedication"] p em {
+  font-style: normal;
 }
 
 /* -------------------------------------------------------------- */
@@ -382,7 +393,8 @@ nav[data-type="toc"] li[data-type="part"] {
 nav[data-type="toc"] li[data-type="part"] {  margin-top: 24.4pt;}
 
 nav[data-type="toc"] li[data-type="preface"],
-nav[data-type="toc"] li[data-type="foreword"] {
+nav[data-type="toc"] li[data-type="foreword"],
+nav[data-type="toc"] li[data-type="dedication"] {
   font-family: Helvetica, phei, sans-serif;
   font-size: 9.5pt;
   font-weight: 600;
@@ -406,7 +418,8 @@ nav[data-type="toc"] li[data-type="sect2"] a:after {
 }
 
 nav[data-type="toc"] li[data-type="preface"] > a:after,
-nav[data-type="toc"] li[data-type="foreword"] > a:after {
+nav[data-type="toc"] li[data-type="foreword"] > a:after,
+nav[data-type="toc"] li[data-type="dedication"] > a:after {
   content: leader(space) " " target-counter(attr(href, url), page, lower-roman);
 }
 
@@ -794,26 +807,25 @@ td pre.programlisting, td pre.screen, td pre.literallayout, td code { /* allow c
 /* =========================================================================== */
 
 div.figure {
-  display: block;
+  display: table;
   border-top: 0.5pt solid cmyk(0%,0%,0%,100%);
   border-bottom: 0.5pt solid cmyk(0%,0%,0%,100%);
   margin: 20pt -1.625in;
   padding: 8.64pt 1.625in;
   width: 4.375in;
-  text-align: center; /* in AH Land, this is how you center an img in a block */
+  text-align: center;
   overflow: auto;
 }
 
 div.figcaption {
-  display: block;
-  float: outside page;
+  display: table-caption;
+  caption-side: top;
+  float: outside; /* Prince bug: when this property applied, caption-side has no effect */
   clear: both;
-  margin-left: -1.25in;
-  margin-right: -1.25in;
+  margin-outside: -1.25in;
   width: 1in;
   text-align: left;
   font-family: Helvetica, phei, sans-serif;
-  font-style: italic;
   font-size: 7.5pt;
   line-height: 10pt;
   hyphens: none;
