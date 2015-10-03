@@ -154,9 +154,15 @@ section[data-type="titlepage"] h1 {
 }
 
 
-section[data-type="titlepage"] p[data-type="author"] {
+section[data-type="titlepage"] p[data-type="author"],
+section[data-type="titlepage"] p[data-type="translator"] {
   font-size: 11pt;
   margin-top: 66pt;
+  text-align: right;
+}
+
+.revinfo {
+  display: none;
 }
 
 /* =========================================================================== */
