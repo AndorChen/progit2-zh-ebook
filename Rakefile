@@ -33,14 +33,20 @@ end
 desc 'Delete doc attributions at the first few lines'
 task :modify_preface do
   from = File.join(SOURCE_DIR, 'book', 'preface.asc')
-  to   = File.join(TMP_DIR, 'preface.adoc')
+  preface = File.join(TMP_DIR, 'preface.adoc')
+  dedication = File.join(TMP_DIR, 'dedication.adoc')
 
   sep = '[preface]'.freeze
-  content = sep + File.read(from).split(sep, 2).last
+  parts = File.read(from).split(sep)
+  prefaces = parts[1..-2].join(sep) # the last part is dedication actually
 
   mk_tmp_dir
-  File.write(to, content)
+
+  File.write(preface, sep + prefaces)
   puts 'preface.adoc generated'
+
+  File.write(dedication, "[dedication]#{parts.last}")
+  puts 'dedication.adoc generated'
 end
 
 desc 'Copy all images into one directory'
