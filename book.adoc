@@ -17,10 +17,10 @@
 :version-label: rev
 :toc:
 :toc-title: 目录
-:source2-caption: 代码清单 %NUM%.%SUBNUM%
-:image-caption: 图 %NUM%.%SUBNUM%
-:table-caption: 表 %NUM%.%SUBNUM%
-:sidebar-caption: 旁注 %NUM%.%SUBNUM%
+:source2-caption: 代码清单 %NUM%-%SUBNUM%
+:image-caption: 图 %NUM%-%SUBNUM%
+:table-caption: 表 %NUM%-%SUBNUM%
+:sidebar-caption: 旁注 %NUM%-%SUBNUM%
 :caption-trailing: ：
 :chapter-caption: 第 %NUM% 章
 :section-caption: %NUM% 节
@@ -32,6 +32,8 @@
 :cover-page-title: 封面
 
 include::tmp/preface.adoc[]
+
+include::tmp/dedication.adoc[]
 
 :numbered:
 
